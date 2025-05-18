@@ -1,3 +1,14 @@
+<!--
+  Project Standards and Debug Philosophy
+
+  This project is instrumented for maximal debug-friendliness and maintainability:
+  - Strict TypeScript, React, and ESLint rules prevent bugs and encourage explicit, safe code.
+  - Extensive verbose logging, error handling, and robust test coverage are mandatory.
+  - Contributors must use the provided lint, format, and test scripts before PRs/commits.
+  - All errors, edge cases, and user actions should be logged and tested.
+  - See below for details on development workflow.
+-->
+
 # Mindframe OS Extension
 
 <!-- ...existing documentation... -->
