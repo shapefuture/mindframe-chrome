@@ -1,0 +1,12 @@
+
+name = "mindframe-proxy"
+main = "src/index.ts"
+compatibility_date = "2024-02-15"
+
+[vars]
+# The following are example values that should be set using wrangler secrets
+# OPENROUTER_API_KEY = "your-api-key"
+
+[[rules]]
+type = "ESModule"
+globs = ["**/*.ts"]
