@@ -1,0 +1,49 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
+    "@typescript-eslint/no-explicit-any": "error",
+    "no-console": [
+      "error",
+      { "allow": ["debug", "error", "info", "warn"] }
+    ],
+    "prefer-const": "error",
+    "eqeqeq": ["error", "always"],
+    "consistent-return": "error",
+    "no-implicit-coercion": "error",
+    "no-unsafe-finally": "error",
+    "no-useless-catch": "error",
+    "react/jsx-boolean-value": ["error", "never"],
+    "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/no-autofocus": "warn"
+  }
+}
