@@ -37,6 +37,11 @@
     "postcss": "^8.4.35",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "@types/jest": "^29.5.11",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/jest-dom": "^6.4.6"
   }
 }
