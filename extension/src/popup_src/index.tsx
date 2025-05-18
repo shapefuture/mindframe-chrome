@@ -1,9 +1,19 @@
 
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { OnboardingView } from './views/OnboardingView';
-import { ProfileView } from './views/ProfileView';
+import { createRoot } from 'react-dom/client';
+import App from './App';
+import ErrorBoundary from './components/ErrorBoundary';
+
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
+  console.debug('[Popup] App wrapped in ErrorBoundary and mounted to #root');
+} from './views/ProfileView';
 
 const App: React.FC = () => {
   return (
