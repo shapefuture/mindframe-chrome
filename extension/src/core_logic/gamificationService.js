@@ -3,7 +3,7 @@ import MindframeStore from './MindframeStore.js';
 
 /**
  * GamificationService handles Wisdom XP (WXP), levels, and challenge/drill rewards for MINDFRAME OS.
- * All methods are robust and provide detailed error handling.
+ * All methods are robust and provide detailed error handling and debug logging.
  * @class
  */
 class GamificationService {
@@ -20,11 +20,14 @@ class GamificationService {
    * @returns {number} Level (1-indexed)
    */
   static getLevel(wxp) {
+    console.debug(`[GamificationService.getLevel] Enter wxp=${wxp}`);
     for (let i = this.WXP_THRESHOLDS.length - 1; i >= 0; i--) {
       if (wxp >= this.WXP_THRESHOLDS[i]) {
+        console.debug(`[GamificationService.getLevel] Level found: ${i + 1}`);
         return i + 1; // Levels are 1-indexed
       }
     }
+    console.warn(`[GamificationService.getLevel] Defaulting to level 1`);
     return 1;
   }
 
@@ -34,16 +37,20 @@ class GamificationService {
    * @returns {Promise<void>}
    */
   static async addWXP(amount) {
+    console.debug(`[GamificationService.addWXP] Attempting to add WXP: ${amount}`);
     try {
       await MindframeStore.update(currentState => {
         const oldLevel = GamificationService.getLevel(currentState.wxp);
         const newWXP = currentState.wxp + amount;
         const newLevel = GamificationService.getLevel(newWXP);
-        // You may add logic here to trigger level-up notifications if needed
+        if (newLevel > oldLevel) {
+          console.info(`[GamificationService.addWXP] Level up! ${oldLevel} -> ${newLevel}`);
+        }
         return { wxp: newWXP };
       });
+      console.debug(`[GamificationService.addWXP] Successfully added WXP: ${amount}`);
     } catch (error) {
-      console.error('GamificationService.addWXP error:', error);
+      console.error('[GamificationService.addWXP] Error:', error);
       throw error;
     }
   }
@@ -55,21 +62,26 @@ class GamificationService {
    * @returns {Promise<void>}
    */
   static async completeChallenge(challengeText, hcRelated) {
+    console.debug(`[GamificationService.completeChallenge] challengeText="${challengeText}", hcRelated="${hcRelated}"`);
     try {
-      await MindframeStore.update(currentState => ({
-        wxp: currentState.wxp + GamificationService.DEFAULT_CHALLENGE_WXP,
-        completedChallengeLog: [
-          {
-            timestamp: Date.now(),
-            challengeText,
-            hcRelated,
-            wxpEarned: GamificationService.DEFAULT_CHALLENGE_WXP
-          },
-          ...currentState.completedChallengeLog.slice(0, 19)
-        ]
-      }));
+      await MindframeStore.update(currentState => {
+        const newWXP = currentState.wxp + GamificationService.DEFAULT_CHALLENGE_WXP;
+        const newChallenge = {
+          timestamp: Date.now(),
+          challengeText,
+          hcRelated,
+          wxpEarned: GamificationService.DEFAULT_CHALLENGE_WXP
+        };
+        const updatedLog = [newChallenge, ...currentState.completedChallengeLog.slice(0, 19)];
+        console.debug(`[GamificationService.completeChallenge] New challenge log:`, updatedLog);
+        return {
+          wxp: newWXP,
+          completedChallengeLog: updatedLog
+        };
+      });
+      console.debug(`[GamificationService.completeChallenge] Challenge completed and logged.`);
     } catch (error) {
-      console.error('GamificationService.completeChallenge error:', error);
+      console.error('[GamificationService.completeChallenge] Error:', error);
       throw error;
     }
   }
@@ -80,13 +92,20 @@ class GamificationService {
    * @returns {Promise<void>}
    */
   static async completeDrill(drillId) {
+    console.debug(`[GamificationService.completeDrill] drillId="${drillId}"`);
     try {
-      await MindframeStore.update(currentState => ({
-        wxp: currentState.wxp + GamificationService.DEFAULT_DRILL_WXP,
-        completedDrillIds: [...new Set([...currentState.completedDrillIds, drillId])]
-      }));
+      await MindframeStore.update(currentState => {
+        const newWXP = currentState.wxp + GamificationService.DEFAULT_DRILL_WXP;
+        const updatedDrills = [...new Set([...currentState.completedDrillIds, drillId])];
+        console.debug(`[GamificationService.completeDrill] updated completedDrillIds:`, updatedDrills);
+        return {
+          wxp: newWXP,
+          completedDrillIds: updatedDrills
+        };
+      });
+      console.debug(`[GamificationService.completeDrill] Drill completed and logged.`);
     } catch (error) {
-      console.error('GamificationService.completeDrill error:', error);
+      console.error('[GamificationService.completeDrill] Error:', error);
       throw error;
     }
   }
