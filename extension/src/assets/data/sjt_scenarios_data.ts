@@ -1,56 +1,92 @@
+import type { SJTScenario } from "../../core_logic/types";
 
-import type { SJTScenario } from '../../core_logic/types';
-
+/**
+ * Example SJT (Situational Judgment Test) scenarios with options for onboarding.
+ * Each option is fully typed and includes cognitiveBiasTargeted and cognitiveBiasTargetedScore.
+ */
 export const sjtScenarios: SJTScenario[] = [
   {
-    id: "sjt_1",
-    scenarioText: "You're leading a project and receive feedback that contradicts your initial approach. The feedback seems valid but implementing it would require significant changes to work already completed.",
+    id: "confirmation_bias_email",
+    scenarioText:
+      "You receive an email that confirms your long-held belief about a controversial topic. Do you...",
     options: [
       {
-        text: "Stick to the original plan since changing course would be too disruptive",
-        cognitiveBiasTargeted: "Status Quo Bias",
-        cognitiveBiasTargetedScore: 2,
-        isBetterThinking: false
-      },
-      {
-        text: "Carefully evaluate the feedback and assess the long-term benefits versus short-term costs",
-        cognitiveBiasTargeted: null,
-        isBetterThinking: true
-      },
-      {
-        text: "Immediately implement all suggested changes to avoid any potential issues",
-        cognitiveBiasTargeted: "Action Bias",
-        cognitiveBiasTargetedScore: 1,
-        isBetterThinking: false
-      }
-    ],
-    biasExplanation: "This scenario tests for status quo bias and action bias, both of which can impair optimal decision-making",
-    relatedInterests: ["project_management", "decision_making"]
-  },
-  {
-    id: "sjt_2",
-    scenarioText: "You read an article that perfectly confirms your existing views on a controversial topic. What's your next step?",
-    options: [
-      {
-        text: "Share it immediately with others who share your viewpoint",
+        text: "Accept the information without further investigation.",
         cognitiveBiasTargeted: "Confirmation Bias",
         cognitiveBiasTargetedScore: 2,
-        isBetterThinking: false
+        isBetterThinking: false,
       },
       {
-        text: "Look for credible sources with opposing viewpoints to understand the full picture",
+        text: "Seek additional sources to verify the claim.",
         cognitiveBiasTargeted: null,
-        isBetterThinking: true
+        cognitiveBiasTargetedScore: 0,
+        isBetterThinking: true,
       },
       {
-        text: "Fact-check the article's main claims and examine its methodology",
-        cognitiveBiasTargeted: null,
-        isBetterThinking: true
-      }
+        text: "Share the information with others who agree with you.",
+        cognitiveBiasTargeted: "Confirmation Bias",
+        cognitiveBiasTargetedScore: 1,
+        isBetterThinking: false,
+      },
     ],
-    biasExplanation: "This scenario examines confirmation bias and the tendency to seek information that confirms our existing beliefs",
-    relatedInterests: ["critical_thinking", "research"]
+    biasExplanation:
+      "Confirmation bias is the tendency to search for, interpret, favor, and recall information that confirms one's preexisting beliefs.",
+    relatedInterests: ["critical_thinking", "bias_detection"],
+  },
+  {
+    id: "anchoring_bias_shopping",
+    scenarioText:
+      "A product is first shown to you at $200 but later offered for $120. What is your reaction?",
+    options: [
+      {
+        text: "Feel like $120 is a great deal and purchase immediately.",
+        cognitiveBiasTargeted: "Anchoring Bias",
+        cognitiveBiasTargetedScore: 2,
+        isBetterThinking: false,
+      },
+      {
+        text: "Research the typical price for this product online.",
+        cognitiveBiasTargeted: null,
+        cognitiveBiasTargetedScore: 0,
+        isBetterThinking: true,
+      },
+      {
+        text: "Wait for a better offer without checking the market value.",
+        cognitiveBiasTargeted: "Anchoring Bias",
+        cognitiveBiasTargetedScore: 1,
+        isBetterThinking: false,
+      },
+    ],
+    biasExplanation:
+      "Anchoring bias occurs when people rely too heavily on the first piece of information they receive.",
+    relatedInterests: ["decision_making", "critical_thinking"],
+  },
+  {
+    id: "availability_bias_news",
+    scenarioText:
+      "After seeing news reports about airplane accidents, you...",
+    options: [
+      {
+        text: "Decide to drive instead of fly, believing flying is unsafe.",
+        cognitiveBiasTargeted: "Availability Bias",
+        cognitiveBiasTargetedScore: 2,
+        isBetterThinking: false,
+      },
+      {
+        text: "Look up actual statistics on air travel safety.",
+        cognitiveBiasTargeted: null,
+        cognitiveBiasTargetedScore: 0,
+        isBetterThinking: true,
+      },
+      {
+        text: "Avoid discussing your travel plans.",
+        cognitiveBiasTargeted: null,
+        cognitiveBiasTargetedScore: 0,
+        isBetterThinking: false,
+      },
+    ],
+    biasExplanation:
+      "Availability bias is a mental shortcut that relies on immediate examples that come to mind.",
+    relatedInterests: ["systems_thinking", "bias_detection"],
   }
 ];
-
-export default sjtScenarios;
